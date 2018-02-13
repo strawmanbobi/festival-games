@@ -14,7 +14,6 @@ var s_note = "./res/images/note.png";
 
 var s_logo = "./res/images/logo.png";
 var s_bg = "./res/images/bg.jpg";
-var s_bg_title = "./res/images/bg_title.jpg";
 var s_bg_default = "./res/images/bg_default.jpg";
 var s_floor = "./res/images/bone.png";
 
@@ -27,6 +26,7 @@ var s_stars = "./res/images/stars.png";
 
 // audio resources
 var s_remove_sound = "./res/audio/btn_bubble.ogg";
+var s_bgm = "./res/audio/bgm.mp3";
 
 // other resources
 var s_bubble_remove = "./res/bubble_remove.plist";
@@ -44,7 +44,6 @@ var resources = [
     s_4,
     s_logo,
     s_bg,
-    s_bg_title,
     s_bg_default,
     s_note,
     s_floor,
@@ -56,6 +55,7 @@ var resources = [
 
     // sounds
     s_remove_sound,
+    s_bgm,
 
     // effects
     s_bubble_remove,

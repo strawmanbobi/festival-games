@@ -19,11 +19,11 @@ exports.setupEnvironment = function () {
         OSS_APP_ID = "T82nbipHSESmHzd8";
         OSS_APP_SECRET = "SOweQ8UVwCwPr2NC8EC89EOeKJc5Um";
         FILE_TEMP_PATH = "E:/Data/Game";
-        MONGO_DB_URI = "mongodb://127.0.0.1:27017/dummy_game";
+        MONGO_DB_URI = "mongodb://127.0.0.1:27017/festival";
         MONGO_DB_SERVER_ADDRESS = "127.0.0.1";
-        MONGO_DB_NAME = "dummy_game";
-        MONGO_DB_USER = 'root';
-        MONGO_DB_PASSWORD = 'DummyVip2017';
+        MONGO_DB_NAME = "festival";
+        MONGO_DB_USER = 'admin';
+        MONGO_DB_PASSWORD = '123456';
     } else if (enums.APP_PRODUCTION_MODE === env) {
         LISTEN_PORT = "3002";
         APP_SERVER_ADDRESS = "localhost";
@@ -33,11 +33,11 @@ exports.setupEnvironment = function () {
         OSS_APP_ID = "T82nbipHSESmHzd8";
         OSS_APP_SECRET = "SOweQ8UVwCwPr2NC8EC89EOeKJc5Um";
         FILE_TEMP_PATH = "/data/game";
-        MONGO_DB_URI = "mongodb://127.0.0.1:27017/dummy_game";
+        MONGO_DB_URI = "mongodb://127.0.0.1:27017/festival";
         MONGO_DB_SERVER_ADDRESS = "127.0.0.1";
-        MONGO_DB_NAME = "dummy_game";
-        MONGO_DB_USER = 'root';
-        MONGO_DB_PASSWORD = 'DummyVip2017';
+        MONGO_DB_NAME = "festival";
+        MONGO_DB_USER = 'admin';
+        MONGO_DB_PASSWORD = '123456';
     } else if (enums.APP_USERDEBUG_MODE === env) {
         LISTEN_PORT = "3002";
         APP_SERVER_ADDRESS = "localhost";
@@ -47,10 +47,10 @@ exports.setupEnvironment = function () {
         OSS_APP_ID = "T82nbipHSESmHzd8";
         OSS_APP_SECRET = "SOweQ8UVwCwPr2NC8EC89EOeKJc5Um";
         FILE_TEMP_PATH = "/data/game";
-        MONGO_DB_URI = "mongodb://127.0.0.1:27017/dummy_game";
+        MONGO_DB_URI = "mongodb://127.0.0.1:27017/festival";
         MONGO_DB_SERVER_ADDRESS = "127.0.0.1";
-        MONGO_DB_NAME = "dummy_game";
-        MONGO_DB_USER = 'root';
-        MONGO_DB_PASSWORD = 'DummyVip2017';
+        MONGO_DB_NAME = "festival";
+        MONGO_DB_USER = 'admin';
+        MONGO_DB_PASSWORD = '123456';
     }
 };

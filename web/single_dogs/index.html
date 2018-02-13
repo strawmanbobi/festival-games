@@ -8,23 +8,37 @@
     <meta name="screen-orientation" content="portrait">
     <meta name="description" content="dummy">
     <meta name="author" content="dummy team">
-    <title>消灭单身狗</title>
+    <title>消灭情侣狗</title>
     <link rel="stylesheet" href="./js/public/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./style/index.css">
 </head>
 <body>
     <!-- cocos2d game container -->
     <div id="gameContainer" style="text-align: center;">
     </div>
+
+    <div id="result_layer" class="result-mask opacity" style="display: none;">
+        <div style="margin-top: 50px; width:100%; text-align: center;">
+            <img id="result_pic" style="max-width: 80%; max-height: 20%;" src="">
+        </div>
+        <h3 style="color: #FFFFFF; width: 100%; text-align: center;" id="result_text">恭喜获得此单身狗的私密照片一张</h3>
+        <h4 id="result" style="margin-top: 60px; color: #FFFFFF; width: 100%; text-align: center;">你也可以生成自己的游戏</h4>
+        <div style="width:100%; text-align: center;">
+            <a href="#" onclick="gotoCreate();"><img src="./res/images/btn_create.png" style="max-width: 40%;"></a>
+        </div>
+    </div>
+
+    <div id="share_layer" class="mask opacity" style="display: none;" onclick="showShare(0);">
+        <img style="max-width:80%; float:right; margin-right:10px;" src="./res/images/guide1.png"/>
+    </div>
 </body>
 <script src="./js/public/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="./js/public/cocos2d-js-v3.13.js"></script>
 <script src="./js/utils/url-parser.js"></script>
-<script src="./js/utils/md5.js"></script>
-<script src="./js/utils/map.js"></script>
+<script src="./js/utils/string_utils.js"></script>
 <script src="js/platform/index.js"></script>
 <script src="./js/game/resource.js"></script>
 <script src="./js/game/ui/layer_board.js"></script>
-<script src="./js/game/ui/layer_result.js"></script>
 <script src="./js/game/ui/layer_title.js"></script>
 <script src="js/game/model/bubble.js"></script>
 </html>

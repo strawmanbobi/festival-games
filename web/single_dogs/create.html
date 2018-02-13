@@ -8,7 +8,7 @@
     <meta name="screen-orientation" content="portrait">
     <meta name="description" content="dummy">
     <meta name="author" content="dummy team">
-    <title>消灭单身狗</title>
+    <title>消灭情侣狗</title>
     <link rel="stylesheet" href="./js/public/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./js/public/bower_components/bootstrap-fileinput/css/fileinput.min.css">
     <link rel="stylesheet" href="./style/create.css">
@@ -17,15 +17,14 @@
 <!-- cocos2d game container -->
 <div class="container" style="color: #FFFFFF;">
     <img style="margin-top: 20px; max-width: 80%;" src="./res/images/logo.png">
-    <h2 style="width: 100%; text-align: center; margin-top: 20px;"><strong>生成自己的游戏</strong></h2>
     <form id="create_game_form" enctype="multipart/form-data" method="post">
     <div>
-        <h4 style="margin-top: 20px;">上传一副图片作为背景</h4>
+        <p style="margin-top: 20px; margin-bottom: 20px;">上传一副图片作为背景，<br>游戏结束之后背景会被显示，<br>也可以不上传，直接生成</p>
         <input type="file" id="my_picture" name="my_picture">
         <input type="hidden" name="player_id" id="player_id">
         <input type="hidden" name="use_default_bg" id="use_default_bg">
         <div style="margin-top: 10px; width: 100%; text-align: center;">
-            <a class="btn btn-lg btn-success" onclick="createGame();">提交</a>
+            <a class="btn btn-lg btn-success" onclick="createGame();">生成</a>
         </div>
     </div>
     </form>
@@ -35,9 +34,6 @@
 <script src="./js/public/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="./js/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="./js/public/bower_components/bootstrap-fileinput/js/fileinput.min.js"></script>
-<script src="./js/utils/url-parser.js"></script>
-<script src="./js/utils/md5.js"></script>
-<script src="./js/utils/map.js"></script>
 <script src="./js/utils/string_utils.js"></script>
 <script src="./js/platform/create.js"></script>
 </html>

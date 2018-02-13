@@ -3,8 +3,8 @@
  * 2018-02-04
  */
 
-var ROW = 8;
-var COL = 8;
+var ROW = 4;
+var COL = 4;
 var SCOPE = 5;
 var size = null;
 var blank = 2;
@@ -14,10 +14,14 @@ var STATE_PREPARE = 0;
 var STATE_RUNNING = 1;
 var STATE_FINISHED = 2;
 
+var winGame = false;
+
 var INIT_SCORE = 1000;
 var SCORE_STEP = 2000;
 
 var gameState = STATE_PREPARE;
+
+var bgInitated = false;
 
 var GameLayer = cc.Layer.extend({
 
@@ -31,7 +35,6 @@ var GameLayer = cc.Layer.extend({
 
     // layers
     titleLayer: null,
-    resultLayer: null,
 
     // models
     background: null,
@@ -135,15 +138,6 @@ var GameLayer = cc.Layer.extend({
         this.updateMaskLayer();
 
         var positionY = size.height - size.height / (ROW + 2) / 2;
-        /*
-        // draw level and score label
-        this.lblLevel = cc.LabelTTF.create("LEVEL " + this.level, FONT_TYPE, 32);
-        this.lblLevel.setPosition(cc.p(size.width - blank * 2, positionY));
-        this.lblLevel.setAnchorPoint(cc.p(1, 0.5));
-        this.lblLevel.setScale(1);
-        this.lblLevel.setColor(cc.color(255, 255, 255, 255));
-        this.addChild(this.lblLevel, 2);
-        */
 
         var lblScorePosition = cc.p(size.width / 2 - blank * 4, positionY);
         // initialize to 0/1000
@@ -207,13 +201,8 @@ var GameLayer = cc.Layer.extend({
         this.titleLayer.setVisible(true);
         this.addChild(this.titleLayer, 10);
 
-        // add result layer
-        this.resultLayer = new ResultLayer(this.gameScale);
-        this.resultLayer.init();
-        this.resultLayer.setAnchorPoint(0, 0);
-        this.resultLayer.setPosition(0, 0);
-        this.resultLayer.setVisible(false);
-        this.addChild(this.resultLayer, 100);
+        // play bgm
+        cc.audioEngine.playEffect(s_bgm, true);
 
         gameState = STATE_PREPARE;
         this.scheduleUpdate();
@@ -255,12 +244,12 @@ var GameLayer = cc.Layer.extend({
             this.bubbleSprites[this.bubbleSprites.length - k - 1] = spriteRow;
         }
     },
-    
+
     /* if we need to apply customized image to bubble map - begin */
     downloadImg: function() {
         cc.textureCache.addImage(bgImgPath, this.downloadCallback, this);
     },
-    
+
     downloadCallback: function(texture) {
         if (texture instanceof cc.Texture2D) {
             // draw background image
@@ -278,7 +267,6 @@ var GameLayer = cc.Layer.extend({
 
     /* if we need to apply customized image to bubble map - end */
     resetGame: function (event) {
-        this.resultLayer.setVisible(false);
         this.level = 1;
         this.rest = ROW * COL;
         this.requireScore = INIT_SCORE;
@@ -383,7 +371,7 @@ var GameLayer = cc.Layer.extend({
             }
         }
     },
-    
+
     createSprite: function (bubbleType, positionX, positionY) {
         var sprite;
         var batchNode = this.bubbleBatchNodes[bubbleType];
@@ -394,7 +382,7 @@ var GameLayer = cc.Layer.extend({
         batchNode.addChild(sprite);
         return sprite;
     },
-    
+
     updateUI: function (nullCol) {
         if (nullCol != null) {
             this.bubbleModel.updateAndMove(nullCol);
@@ -454,7 +442,7 @@ var GameLayer = cc.Layer.extend({
         if (!this.bubbleModel.checkHasConnected()) {
             if (this.score >= this.requireScore) {
                 this.removeRestBubbles();
-                return;
+                /*
                 this.level++;
                 this.removeRestBubbles();
 
@@ -504,9 +492,10 @@ var GameLayer = cc.Layer.extend({
                 var sequence3 = cc.Sequence.create(lblDelay, fadeOut3, fadeCallFun);
                 this.lblScore.runAction(sequence1);
                 this.lblLevel.runAction(sequence2);
+                */
             } else {
                 // this.removeRestBubbles();
-                this.gameOver();
+                this.gameOver(false);
             }
         }
     },
@@ -522,7 +511,7 @@ var GameLayer = cc.Layer.extend({
                         this.rest -= 1;
                         this.updateMaskLayer();
                         sprite.setVisible(false);
-                        cc.audioEngine.playEffect(s_remove_sound);
+                        // cc.audioEngine.playEffect(s_remove_sound);
                         var particle = cc.ParticleSystem.create(s_bubble_remove);
                         var positionX = sprite.getPosition().x + this.bubbleWidth / 2;
                         var positionY = sprite.getPosition().y + this.bubbleWidth / 2;
@@ -547,6 +536,7 @@ var GameLayer = cc.Layer.extend({
                 }
             }
         }
+        this.gameOver(true);
     },
 
     blurSprite: function(sprite) {
@@ -568,18 +558,18 @@ var GameLayer = cc.Layer.extend({
         }
     },
 
-    updateMaskLayer: function(){
+    updateMaskLayer: function() {
         if(this.maskLayer) this.removeChild(this.maskLayer);
-        this.maskLayer = cc.LayerColor.create(cc.color(0, 0, 0, 250 * this.rest / 100 ), size.width, size.height);
+        this.maskLayer = cc.LayerColor.create(cc.color(0, 0, 0, 250 * this.rest / (ROW * COL) ), size.width, size.height);
         this.maskLayer.setAnchorPoint(cc.p(0, 0));
         this.maskLayer.setPosition(cc.p(0, 0));
         this.addChild(this.maskLayer, 1);
     },
 
-    gameOver: function () {
-        this.setTouchEnabled(false);
-        this.resultLayer.setVisible(true);
+    gameOver: function (win) {
         gameState = STATE_FINISHED;
+        winGame = true;
+        showResult();
     },
 
     update: function() {
@@ -594,8 +584,12 @@ var GameLayer = cc.Layer.extend({
                 break;
 
             case STATE_FINISHED:
-                this.resultLayer.update();
                 break;
+        }
+
+        if (null !== bgImgPath && false === bgInitated) {
+            bgInitated = true;
+            this.downloadImg();
         }
     },
     
@@ -603,17 +597,14 @@ var GameLayer = cc.Layer.extend({
         switch(gameState) {
             case STATE_PREPARE:
                 this.titleLayer.setVisible(true);
-                this.resultLayer.setVisible(false);
                 break;
 
             case STATE_RUNNING:
                 this.titleLayer.setVisible(false);
-                this.resultLayer.setVisible(false);
                 break;
 
             case STATE_FINISHED:
                 this.titleLayer.setVisible(false);
-                this.resultLayer.setVisible(true);
                 break;
         }
     }

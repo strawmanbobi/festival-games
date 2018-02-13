@@ -35,15 +35,17 @@ exports.createGame = function (req, res) {
     var fileName;
     var filePath;
 
+    /*
     form.on('file', function(field, file) {
         // rename the incoming file to the file's name
-        logger.info("on file in formidable, change file name in random");
+        logger.info("on file in formidable, change file name : " + file.name + " to random");
         fileName = stringUtils.randomChar(16);
         filePath = form.uploadDir + "/" + fileName;
         fs.rename(file.path, filePath);
     }).on('error', function(err) {
         logger.error("formidable parse form error : " + err);
     });
+    */
 
     form.parse(req, function(err, fields, files) {
         if(err) {
@@ -53,13 +55,19 @@ exports.createGame = function (req, res) {
             gameObj = fields;
             playerID = gameObj.player_id;
             useDefaultBG = gameObj.use_default_bg;
-            // filePath = files.my_picture.path;
+            filePath = files.my_picture.path;
+            var find = "\\\\";
+            var re = new RegExp(find, "g");
+            var unixFilePath = filePath.replace(re, "/");
+            fileName = unixFilePath.substring(unixFilePath.lastIndexOf("/"));
             // set MIME to octet-stream as there might not be any contentType passed from the front-end form
-            contentType = files.type || "application/octet-stream";
-            logger.info("create game form submitted successfully : " + playerID + ", " + filePath);
+            contentType = files.my_picture.type || "application/octet-stream";
+            logger.info("create game form submitted successfully : " + playerID + ", " + filePath + ", " + fileName + ", " + contentType);
             gameLogic.createGameWorkUnit(fileName, filePath, playerID, useDefaultBG, contentType, function(createGameErr) {
                 if (errorCode.SUCCESS.code === createGameErr.code) {
-                    res.redirect("/index.html?player_id="+playerID+"&game_id="+fileName);
+                    var url = "/single_dogs?player_id="+playerID+"&game_id="+fileName;
+                    logger.info("create game successfully, redirect to " + url);
+                    res.redirect(url);
                     res.end();
                 } else {
                     res.redirect("/error.html");
@@ -71,23 +79,6 @@ exports.createGame = function (req, res) {
 };
 
 /*
- * function :   get game info by gameID
- * parameter :  gameID
- * return :     game response
- */
-exports.getGameInfo = function (req, res) {
-    var gameID = req.body.game_id;
-
-    var gameResponse = new GameResponse();
-    gameLogic.getGameWorkUnit(gameID, function(getGameErr, game) {
-        gameResponse.status = getGameErr;
-        gameResponse.entity = game;
-        res.send(gameResponse);
-        res.end();
-    });
-};
-
-/*
  * function :   count on the visit of game
  * parameter :  gameID
  * return :     service response
@@ -95,10 +86,11 @@ exports.getGameInfo = function (req, res) {
 exports.visitGame = function (req, res) {
     var gameID = req.body.game_id;
 
-    var serviceResponse = new ServiceResponse();
-    gameLogic.visitGameWorkUnit(gameID, function(getGameErr) {
-        serviceResponse.status = getGameErr;
-        res.send(serviceResponse);
+    var gameResponse = new GameResponse();
+    gameLogic.visitGameWorkUnit(gameID, function(getGameErr, game) {
+        gameResponse.status = getGameErr;
+        gameResponse.entity = game;
+        res.send(gameResponse);
         res.end();
     });
 };

@@ -85,9 +85,11 @@ exports.visitGameWorkUnit = function(gameID, callback) {
 
     gameDao.getGames(conditions, function(getGamesErr, games) {
         if (errorCode.SUCCESS.code === getGamesErr.code && null != games && games.length > 0) {
-            var game = games[0];
-            game.visit = game.visit + randomNum(1, 5);
-
+            var visitedGame = games[0];
+            visitedGame.visit = visitedGame.visit + randomNum(1, 5);
+            gameDao.updateGame(conditions, visitedGame, function(updateGameErr, updatedGame) {
+                callback(errorCode.SUCCESS, updatedGame);
+            })
         } else {
             callback(errorCode.FAILED, null);
         }

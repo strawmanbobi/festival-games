@@ -59,15 +59,15 @@ exports.updateGame = function (conditions, newGame, callback) {
                 }
             }, function (err, result) {
                 if (!err) {
-                    callback(errorCode.SUCCESS);
+                    callback(errorCode.SUCCESS, newGame);
                 } else {
                     logger.error('update game ' + newGame.gameID + ' failed: ' + err);
-                    callback(errorCode.FAILED);
+                    callback(errorCode.FAILED, newGame);
                 }
             });
         } else {
             logger.error('get collection game failed : ' + err);
-            callback(errorCode.FAILED);
+            callback(errorCode.FAILED, newGame);
         }
     });
 };
