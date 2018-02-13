@@ -47,29 +47,33 @@ exports.createGameWorkUnit = function(fileName, filePath, playerID, useDefaultBG
                     logger.info('Width after rotation: ' + dimensions.width);
                 }
                 // upload picture to aliOSS
-                logger.info("read picture file successfully, file size = " + fileData.length);
-                aliOss.saveObjectFromBinary(fileName, fileData, contentType,
-                function (createObjectErr, objectID) {
-                    logger.info("create object to aliOSS result = " + JSON.stringify(createObjectErr));
-                    if (errorCode.SUCCESS.code === createObjectErr) {
-                        // save game to db
-                        var game = {
-                            playerID: playerID,
-                            gameID: fileName,
-                            useDefaultBG: 0,
-                            visit: 0
-                        };
-                        gameDao.createGame(game, function(createGameErr) {
-                            callback(createGameErr);
+                if (null != fileData) {
+                    // logger.info("read picture file successfully, file size = " + fileData.length);
+                    aliOss.saveObjectFromBinary(fileName, fileData, contentType,
+                        function (createObjectErr, objectID) {
+                            logger.info("create object to aliOSS result = " + JSON.stringify(createObjectErr));
+                            if (errorCode.SUCCESS.code === createObjectErr) {
+                                // save game to db
+                                var game = {
+                                    playerID: playerID,
+                                    gameID: fileName,
+                                    useDefaultBG: 0,
+                                    visit: 0
+                                };
+                                gameDao.createGame(game, function(createGameErr) {
+                                    callback(createGameErr);
+                                });
+                            } else {
+                                callback(errorCode.FAILED);
+                            }
                         });
-                    } else {
-                        callback(errorCode.FAILED);
-                    }
-                });
+                } else {
+                    callback(errorCode.FAILED);
+                }
             });
         } else {
             fs.readFile(filePath, function(readFileErr, fileData) {
-                if (readFileErr) {
+                if (readFileErr || null == fileData) {
                     logger.error("read picture file error : " + readFileErr);
                     callback(errorCode.FAILED, null);
                 } else {
