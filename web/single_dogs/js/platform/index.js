@@ -161,6 +161,6 @@ function gotoCreate() {
     window.location = "./create.html";
 }
 
-function relay() {
+function replay() {
     window.location.reload();
 }
