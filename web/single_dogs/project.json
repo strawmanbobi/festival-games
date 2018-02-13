@@ -5,7 +5,7 @@
     "debugMode": 0,
     "frameRate": 60,
     "id": "gameCanvas",
-    "renderMode": 0,
+    "renderMode": 1,
     "jsList": [],
     "modules": [
         "cocos2d",
