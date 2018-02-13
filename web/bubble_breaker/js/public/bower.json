@@ -1,0 +1,19 @@
+{
+    "name": "dummy-texas-holdem",
+    "version": "0.0.1",
+    "description": "dummy",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/dummy-ai-games/dummy-texas-holdem"
+    },
+    "keywords": [
+        "Texas Hold'em Client"
+    ],
+    "author": "dummy team",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "bootstrap": "^3.2.0",
+        "jquery": "^2.2.4",
+        "bootstrap-fileinput": "^4.4.7"
+    }
+}

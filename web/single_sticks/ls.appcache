@@ -1,0 +1,54 @@
+CACHE MANIFEST
+#2013-11-10_b3
+CACHE:
+
+#picture file
+./res/bg.png
+./res/bg_ground.png
+./res/ls_boy.png
+./res/ls_boy_b.png
+./res/ls_boy_op1.png
+./res/ls_boy_op2.png
+./res/ls_boy_op3.png
+./res/ls_girl.png
+./res/ls_girl_b.png
+./res/ls_girl_op1.png
+./res/ls_girl_op2.png
+./res/ls_girl_op3.png
+./res/ls_title.png
+./res/title_text.png
+./res/girl.png
+./res/boy.png
+./res/failure_gay.png
+./res/failure_lesbian.png
+./res/success.png
+./res/failure_death.png
+./res/failure_timeout.png
+./res/popup_soap.png
+./res/popup_lala.png
+./res/popup_love.png
+./res/halo.png
+./res/milestone.png
+./res/girl_selected.png
+./res/boy_selected.png
+./res/failure_n_again.png
+./res/failure_n_again_pressed.png
+./res/success_n_again.png
+./res/success_n_again_pressed.png
+
+#sounds file
+
+#js file
+./js/cocos2d-js-v3.1-lite.js
+./js/wx_share.js
+./js/fws_game.js
+./js/global_var.js
+./js/src/game_layer.js
+./js/src/lighting_stick.js
+./js/src/opposite.js
+./js/src/resource.js
+
+#public picture
+
+NETWORK:
+*
