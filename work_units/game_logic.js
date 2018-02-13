@@ -41,10 +41,11 @@ exports.createGameWorkUnit = function(fileName, filePath, playerID, useDefaultBG
             jo.rotate(filePath, options, function(readFileErr, fileData, orientation, dimensions) {
                 if (readFileErr) {
                     logger.error('An error occurred when rotating the file: ' + JSON.stringify(readFileErr));
+                } else {
+                    logger.info('Orientation was: ' + orientation);
+                    logger.info('Height after rotation: ' + dimensions.height);
+                    logger.info('Width after rotation: ' + dimensions.width);
                 }
-                logger.info('Orientation was: ' + orientation);
-                logger.info('Height after rotation: ' + dimensions.height);
-                logger.info('Width after rotation: ' + dimensions.width);
                 // upload picture to aliOSS
                 logger.info("read picture file successfully, file size = " + fileData.length);
                 aliOss.saveObjectFromBinary(fileName, fileData, contentType,
