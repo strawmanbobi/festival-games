@@ -11,9 +11,9 @@ exports.setupEnvironment = function () {
     var env = process.env.NODE_ENV || 'development';
     ENV = env;
     if (undefined === typeof env || null === env || "" === env || enums.APP_DEVELOPMENT_MODE === env) {
-        LISTEN_PORT = "3002";
+        LISTEN_PORT = "80";
         APP_SERVER_ADDRESS = "localhost";
-        APP_SERVER_PORT = "8080";
+        APP_SERVER_PORT = "80";
         OSS_HOST = "oss-cn-hangzhou";
         OSS_PORT = "80";
         OSS_APP_ID = "T82nbipHSESmHzd8";
@@ -25,9 +25,9 @@ exports.setupEnvironment = function () {
         MONGO_DB_USER = 'admin';
         MONGO_DB_PASSWORD = '123456';
     } else if (enums.APP_PRODUCTION_MODE === env) {
-        LISTEN_PORT = "3002";
+        LISTEN_PORT = "80";
         APP_SERVER_ADDRESS = "localhost";
-        APP_SERVER_PORT = "8080";
+        APP_SERVER_PORT = "80";
         OSS_HOST = "oss-cn-hangzhou";
         OSS_PORT = "80";
         OSS_APP_ID = "T82nbipHSESmHzd8";
@@ -39,9 +39,9 @@ exports.setupEnvironment = function () {
         MONGO_DB_USER = 'admin';
         MONGO_DB_PASSWORD = '123456';
     } else if (enums.APP_USERDEBUG_MODE === env) {
-        LISTEN_PORT = "3002";
+        LISTEN_PORT = "80";
         APP_SERVER_ADDRESS = "localhost";
-        APP_SERVER_PORT = "8080";
+        APP_SERVER_PORT = "80";
         OSS_HOST = "oss-cn-hangzhou";
         OSS_PORT = "80";
         OSS_APP_ID = "T82nbipHSESmHzd8";
