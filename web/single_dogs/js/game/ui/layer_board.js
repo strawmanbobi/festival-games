@@ -64,7 +64,6 @@ var GameLayer = cc.Layer.extend({
     lblScore: null,
     lblGold: null,
     lblReset: null,
-    lblLevel: null,
 
     // controls
 
@@ -283,7 +282,7 @@ var GameLayer = cc.Layer.extend({
         this.rest = ROW * COL;
         this.requireScore = INIT_SCORE;
         this.score = 0;
-        this.lblLevel.setString("LEVEL " + this.level);
+        // this.lblLevel.setString("LEVEL " + this.level);
         this.lblScore.setString(this.score + "/" + this.requireScore);
         this.index = 0;
         this.bubbleSprites.length = 0;

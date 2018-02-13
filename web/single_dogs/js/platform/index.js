@@ -162,5 +162,6 @@ function gotoCreate() {
 }
 
 function replay() {
-    window.location.reload();
+    $("#result_layer").hide();
+    gameBoard.resetGame();
 }
