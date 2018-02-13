@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="screen-orientation" content="portrait"/>
+    <meta name="description" content="create mp">
+    <meta name="author" content="strawmanbobi">
+    <title>朋友圈摇一摇领红包</title>
+    <script src="../../public_js/jquery/jquery-1.9.1.min.js"></script>
+    <script src="../../public_js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../public_js/bootstrap/js/holder.js"></script>
+    <script src="../../public_js/bootstrap/js/support/modal.js"></script>
+    <script src="../../public_js/bootstrap/js/support/transition.js"></script>
+    <script src="../../public_js/utils/random_gen.js"></script>
+    <script src="../../public_js/utils/form_validator.js"></script>
+    <script src="../../public_js/utils/url_parser.js"></script>
+    <script src="./js/create_mp.js"></script>
+    <script src="./js/wx_share.js"></script>
+    <script src="../../public_js/jquery/jquery.mobile-1.4.0.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="../../public_js/bootstrap/css/bootstrap.min.css">
+    <!-- record visit -->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?655cb1d779285a6b44bc1d95f2197d95";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body>
+<div class="container marketing">
+    <hr>
+    <span id="lg">请为您可怜的朋友留一句话吧：</span>
+    <p><button class="btn btn-success" onclick="createMP(1);" style="width: 100%; white-space: normal;" id="btn_1"></button></p>
+    <p><button class="btn btn-primary" onclick="createMP(2);" style="width: 100%; white-space: normal;" id="btn_2"></button></p>
+    <p><button class="btn btn-warning" onclick="createMP(3);" style="width: 100%; white-space: normal;" id="btn_3"></button></p>
+    <p><button class="btn btn-info" onclick="createMP(4);" style="width: 100%; white-space: normal;" id="btn_4"></button></p>
+    <p><button class="btn btn-danger" onclick="createMP(5);" style="width: 100%; white-space: normal;" id="btn_5"></button></p>
+    <hr>
+    不够损？您也可以自定义一句话：
+    <div class="control-group">
+        <div class="controls form-inline">
+            <textarea id="text_content" class="form-control" style="resize:none"
+                      placeholder="请给打开红包的家伙留个言..."></textarea>
+        </div>
+        <span id="position"></span>
+    </div>
+    <br>
+    <div style="display:block;" id="update">
+        <button type="button" class="btn-warning btn" style="width:100%;"
+                onclick="createMP(0);">
+            <b>确认</b>
+        </button>
+    </div>
+    <br>
+    <br>
+</div>
+<!-- hint dialog -->
+<div class="modal fade" id="failure_hint_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">有错误哦</h4>
+            </div>
+            <div class="modal-body">
+                <span>红包创建失败，请重试</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">知道了</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- warning dialog -->
+<div class="modal fade" id="content_too_long_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">有错误哦</h4>
+            </div>
+            <div class="modal-body">
+                <span>你写得太多啦，不能超过32个字哦。</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">知道了</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- thanks dialog -->
+<div class="modal fade" id="thanks_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">创建成功</h4>
+            </div>
+            <div class="modal-body">
+                <span id="thanks_content">你的红(PIAN)包(JU)已经创建，点这里预览并分享！</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success"
+                        data-dismiss="modal" onclick="gotoMP();">预览+分享</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="screen-orientation" content="portrait"/>
+    <meta name="description" content="create mp">
+    <meta name="author" content="strawmanbobi">
+    <title>朋友圈红包</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="../../public_js/bootstrap/css/bootstrap.min.css">
+    <style>
+        html, body
+        {
+            height: 100%;
+            margin: 0;
+        }
+        .mask{ height:100%; width:100%; position:fixed; _position:absolute; top:0; z-index:1000; }
+        .opacity{ opacity:0.95; filter: alpha(opacity=50); background-color:#f0a000; }
+        .listItemNoIcon .ui-icon {
+            display : none;
+        }
+    </style>
+    <!-- record visit -->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?655cb1d779285a6b44bc1d95f2197d95";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<script src="../../public_js/jquery/jquery-1.9.1.min.js"></script>
+<script src="../../public_js/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../public_js/bootstrap/js/support/modal.js"></script>
+<script src="../../public_js/bootstrap/js/support/transition.js"></script>
+<script src="../../public_js/utils/random_gen.js"></script>
+<script src="../../public_js/utils/form_validator.js"></script>
+<script src="../../public_js/utils/url_parser.js"></script>
+<script src="js/show_mp.js"></script>
+<script src="js/wx_share.js"></script>
+<script src="../../public_js/jquery/jquery.mobile-1.4.0.js"></script>
+<body style="background: #a54839;">
+<div style="height:1px; overflow:hidden;">
+    <img src="./res/images/share_icon.png"/>
+</div>
+<div class="carousel slide" data-ride="carousel">
+    <div class="marketing">
+        <img src="./res/images/2015_mp_bg.jpg" style="width: 100%;" id="prim_bg" onload="getMPInfo();">
+        <div id="buttons" style="position: absolute; width: 100%;">
+            <div style="margin: 10px; display: none;" id="create_button_panel">
+                <button class="btn btn-success" style="width: 100%;" onclick="createRoutes();" id="create_button">&nbsp;</button>
+            </div>
+            <div style="width: 100%; display: none; color: #FFFFFF; font-size: 12px; text-align: center;" id="img_who_played">
+                <hr>
+                被此红包骗过的秀逗达到
+            </div>
+            <div style="width: 100%; text-align: center; font-size: 12px; color: #FFFF00; display: none;" id="who_played"></div>
+        </div>
+    </div>
+    <audio id="weixinmp3" src="./res/audio/weixin.mp3">
+        <p>Your browser does not support the audio element.</p>
+    </audio>
+</div>
+<div class="modal fade" id="hint_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">分享提示</h4>
+            </div>
+            <div class="modal-body">
+                <span>此游戏<font color="#FF0000">不能直接分享</font>，如果想娱乐你的朋友，请点击最下方的创建按钮，自行创建一个，并发给朋友，:)</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">知道了</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="share_layer" class="mask opacity" style="display: none;" onclick="share(0);">
+    <img style="max-width:80%; float:right; margin-right:10px;" src="../../public_res/images/guide.png"/>
+</div>
+<div id="loading_layer" class="mask opacity" style="display: block; text-align: center;">
+    <div id="loading" style="font-family: 微软雅黑, 黑体, Arial; margin-top: 150px; font-size: 20px; text-align: center; color: #FFFFFF;">正在打开红包</div>
+</div>
+</body>
+</html>
