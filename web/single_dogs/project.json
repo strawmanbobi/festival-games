@@ -3,9 +3,9 @@
     "isPotrait": true,
     "showFPS": false,
     "debugMode": 0,
-    "frameRate": 12,
+    "frameRate": 60,
     "id": "gameCanvas",
-    "renderMode": 1,
+    "renderMode": 0,
     "jsList": [],
     "modules": [
         "cocos2d",

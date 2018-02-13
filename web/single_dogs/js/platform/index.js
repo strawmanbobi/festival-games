@@ -117,6 +117,7 @@ function initGame() {
 }
 
 function ccLoad() {
+    cc.renderMode = 1;
     cc.game.onStart = function () {
         //load resources
         cc.LoaderScene.preload(resources, function () {

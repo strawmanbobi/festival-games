@@ -96,6 +96,15 @@ var GameLayer = cc.Layer.extend({
 
     init: function() {
         this._super();
+
+        /*
+        var __ccTexture2D_handleLoadedTexture = cc.Texture2D.prototype.handleLoadedTexture;
+        cc.Texture2D.prototype.handleLoadedTexture = function() {
+            __ccTexture2D_handleLoadedTexture.apply(this, arguments);
+            this.setAliasTexParameters();
+        };
+        */
+
         var that = this;
         var width = document.documentElement.clientWidth;
         if (document.documentElement.clientWidth >= this.screenWidthMax) {
@@ -132,6 +141,7 @@ var GameLayer = cc.Layer.extend({
         this.addChild(this.floorBatchNode, 100);
         for (var floorIndex = 0; floorIndex < floorBlockCount; floorIndex++) {
             var floorBlock = cc.Sprite.createWithTexture(this.floorBatchNode.getTexture());
+            // floorBlock.texture.setAliasTexParameters();
             floorBlock.setAnchorPoint(cc.p(0, 0.5));
             floorBlock.setPosition(cc.p(floorIndex * floorWidth, this.firstHeight - floorHeight / 2));
             // a work around to remove the tiny white spaces between floor blocks
@@ -227,8 +237,6 @@ var GameLayer = cc.Layer.extend({
                 var positionX = size.width + this.firstWidth + j * (this.bubbleWidth + blank);
                 var positionY = this.firstHeight + (ROW - 1 - i) * (this.bubbleWidth + blank);
                 sprite = this.createSprite(this.bubbleModel.bubbleArray[i][j], positionX, positionY);
-                // anti-aliases
-                sprite.texture.setAliasTexParameters();
                 spriteRow.push(sprite);
                 if (i === 0 && j === COL - 1) {
                     var showFun = cc.CallFunc.create(function() {
@@ -389,6 +397,8 @@ var GameLayer = cc.Layer.extend({
         var sprite;
         var batchNode = this.bubbleBatchNodes[bubbleType];
         sprite = cc.Sprite.createWithTexture(batchNode.getTexture());
+        // sprite.texture.setAliasTexParameters();
+        // console.log(JSON.stringify(sprite.texture));
         sprite.setPosition(cc.p(positionX, positionY));
         sprite.setScale(this.bubbleWidth / sprite.getContentSize().width);
         sprite.setAnchorPoint(cc.p(0, 0));
