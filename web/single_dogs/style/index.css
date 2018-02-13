@@ -12,6 +12,7 @@ html, body
     top:0;
     z-index:1000;
     background: url('../res/images/bg.jpg') no-repeat center center fixed;
+    overflow-y: scroll;
 }
 
 .mask {
