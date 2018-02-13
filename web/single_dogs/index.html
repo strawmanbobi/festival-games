@@ -20,11 +20,15 @@
     <div id="result_layer" class="result-mask opacity" style="display: none;">
         <div style="margin-top: 50px; width:100%; text-align: center;">
             <a id="pic_download" href="#" download>
-                <img id="result_pic" style="max-width: 70%;" src="">
+                <img id="result_pic" style="max-width: 70%; max-height: 200px;" src="">
             </a>
         </div>
-        <h3 style="color: #FFFFFF; width: 100%; text-align: center;" id="result_text">恭喜获得此单身狗照片一张</h3>
-        <h4 id="result" style="margin-top: 60px; color: #FFFFFF; width: 100%; text-align: center;">你也可以生成自己的游戏</h4>
+        <h4 style="color: #FFFFFF; width: 100%; text-align: center;" id="result_text">恭喜获得此单身狗照片一张</h4>
+        <h4 style="margin-top: 40px; color: #FFFFFF; width: 100%; text-align: center;">重玩</h4>
+        <div style="width:100%; text-align: center;">
+            <a href="#" onclick="replay();"><img src="./res/images/btn_start.png" style="max-width: 40%;"></a>
+        </div>
+        <h4 id="result" style="margin-top: 40px; color: #FFFFFF; width: 100%; text-align: center;">你也可以生成自己的游戏</h4>
         <div style="width:100%; text-align: center;">
             <a href="#" onclick="gotoCreate();"><img src="./res/images/btn_create.png" style="max-width: 40%;"></a>
         </div>

@@ -228,6 +228,8 @@ var GameLayer = cc.Layer.extend({
                 var positionX = size.width + this.firstWidth + j * (this.bubbleWidth + blank);
                 var positionY = this.firstHeight + (ROW - 1 - i) * (this.bubbleWidth + blank);
                 sprite = this.createSprite(this.bubbleModel.bubbleArray[i][j], positionX, positionY);
+                // anti-aliases
+                sprite.texture.setAliasTexParameters();
                 spriteRow.push(sprite);
                 if (i === 0 && j === COL - 1) {
                     var showFun = cc.CallFunc.create(function() {

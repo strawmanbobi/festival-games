@@ -13,12 +13,13 @@ var bgImgPath = null;
 var visited = null;
 var useDefaultBG = null;
 var word = "";
+var shared = 0;
 
 var words = [
     "今年情人节，单身狗们出大事了",
     "情人节撞上狗年，生存还是毁灭？",
     "好好的情人节，你皮这一下好玩嘛？",
-    "翻身做主人，单身狗永不为奴的秘密是…"
+    "单身狗翻身做主人的秘诀是…"
 ];
 
 $(document).ready(function () {
@@ -32,8 +33,12 @@ $(document).ready(function () {
             localStorage.setItem("player_id", playerID);
         }
     }
+    shared = localStorage.getItem("shared");
     if (playerID === playerIDURL) {
-        showShare(1);
+        if (null === shared || "" === shared || "0" === shared) {
+            showShare(1);
+            localStorage.setItem("shared", "1");
+        }
     }
 
     initGame();
@@ -139,7 +144,7 @@ function showResult() {
         $("#pic_download").attr("href", bgImgPath);
         $("#pic_download").attr("download", bgImgPath + ".jpg");
         $("#result_pic").attr("src", "./res/images/single_dog.png");
-        $("#result_text").html("狗年大吉, 万事如意<br>过年多吃狗粮");
+        $("#result_text").html("分数不够哦<br>狗年大吉, 万事如意<br>过年多吃狗粮");
     }
     $("#result_layer").show();
 }
@@ -154,4 +159,8 @@ function showShare(show) {
 
 function gotoCreate() {
     window.location = "./create.html";
+}
+
+function relay() {
+    window.location.reload();
 }
