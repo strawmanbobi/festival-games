@@ -25,7 +25,10 @@ var s_button_create_pressed = "./res/images/btn_create_.png";
 var s_stars = "./res/images/stars.png";
 
 // audio resources
-var s_remove_sound = "./res/audio/btn_bubble.ogg";
+var s_sound_bark_0 = "./res/audio/bark0.mp3";
+var s_sound_bark_1 = "./res/audio/bark1.mp3";
+var s_sound_bark_2 = "./res/audio/bark2.mp3";
+var s_sound_bark_3 = "./res/audio/bark3.mp3";
 var s_bgm = "./res/audio/bgm.mp3";
 
 // other resources
@@ -54,11 +57,21 @@ var resources = [
     s_stars,
 
     // sounds
-    s_remove_sound,
+    s_sound_bark_0,
+    s_sound_bark_1,
+    s_sound_bark_2,
+    s_sound_bark_3,
     s_bgm,
 
     // effects
     s_bubble_remove,
     s_gassian_blur_fsh,
     s_gassian_blur_vsh
+];
+
+var sounds = [
+    s_sound_bark_0,
+    s_sound_bark_1,
+    s_sound_bark_2,
+    s_sound_bark_3
 ];

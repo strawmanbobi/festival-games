@@ -3,8 +3,8 @@
  * 2018-02-04
  */
 
-var ROW = 4;
-var COL = 4;
+var ROW = 8;
+var COL = 8;
 var SCOPE = 5;
 var size = null;
 var blank = 2;
@@ -17,11 +17,21 @@ var STATE_FINISHED = 2;
 var winGame = false;
 
 var INIT_SCORE = 1000;
-var SCORE_STEP = 2000;
 
 var gameState = STATE_PREPARE;
-
 var bgInitated = false;
+
+// for fun
+var scoreWords = [
+    "汪",
+    "汪汪",
+    "666",
+    "单身万岁",
+    "消灭情侣狗",
+    "我是单身我怕谁",
+    "fff",
+    "烧呀烧"
+];
 
 var GameLayer = cc.Layer.extend({
 
@@ -320,13 +330,14 @@ var GameLayer = cc.Layer.extend({
             this.score += currentScore;
 
             //removed score action
-            var tlblScore = cc.LabelTTF.create(currentScore, FONT_TYPE, 20);
+            var word = scoreWords[randomNum(0, 7)];
+            var tlblScore = cc.LabelTTF.create(word, FONT_TYPE, 20);
             tlblScore.setPosition(this.bubbleSprites[connected[0].x][connected[0].y].getPosition());
             tlblScore.setColor(cc.color(255, 255, 255, 255));
             tlblScore.setAnchorPoint(cc.p(0.5, 1));
             this.addChild(tlblScore, 6);
 
-            var moveAction = cc.MoveTo.create(1.5, cc.p(size.width / 2, size.height / (ROW + 2) * (ROW + 1)));
+            var moveAction = cc.MoveTo.create(1, cc.p(size.width / 2, size.height / (ROW + 2) * (ROW + 1)));
             var fadeAction = cc.FadeOut.create(0.2);
             var callFunc = cc.CallFunc.create(function() {
                 this.removeChild(tlblScore);
@@ -336,7 +347,8 @@ var GameLayer = cc.Layer.extend({
             tlblScore.runAction(actionSequence);
             var bubbleType = this.bubbleModel.bubbleArray[connected[0].x][connected[0].y];
 
-            cc.audioEngine.playEffect(s_remove_sound);
+            var soundEffect = sounds[randomNum(0, 3)];
+            cc.audioEngine.playEffect(soundEffect);
 
             for (var i = 0; i < connected.length; i++) {
                 var y = connected[i].y;
@@ -442,57 +454,6 @@ var GameLayer = cc.Layer.extend({
         if (!this.bubbleModel.checkHasConnected()) {
             if (this.score >= this.requireScore) {
                 this.removeRestBubbles();
-                /*
-                this.level++;
-                this.removeRestBubbles();
-
-                var lblDelay = cc.DelayTime.create(this.nextLevelDelayTime);
-                var fadeOut1 = cc.FadeOut.create(0.2);
-                var fadeOut2 = cc.FadeOut.create(0.2);
-                var fadeOut3 = cc.FadeOut.create(0.2);
-                var fadeCallFun = cc.CallFunc.create(function() {
-                    if (this.level < 6) {
-                        this.requireScore += SCORE_STEP;
-                    } else {
-                        this.requireScore += SCORE_STEP + 500 * (this.level - 5);
-                    }
-                    var nextLblLevel = cc.LabelTTF.create("LEVEL " + this.level, FONT_TYPE, 32);
-                    nextLblLevel.setPosition(cc.p(size.width + nextLblLevel.getContentSize().width / 2,
-                        size.height / 2 + 20));
-                    nextLblLevel.setColor(cc.color(255, 255, 255, 255));
-                    var nextLblScore = cc.LabelTTF.create("Target: " + this.requireScore);
-                    nextLblScore.setPosition(cc.p(size.width + nextLblScore.getContentSize().width / 2,
-                        size.height / 2));
-                    nextLblScore.setColor(cc.color(255, 255, 255, 255));
-
-                    this.addChild(nextLblLevel);
-                    this.addChild(nextLblScore);
-                    var moveLeft = cc.MoveTo.create(2, cc.p(0, size.height / 2 + 20));
-                    var moveLeft1 = cc.MoveTo.create(2, cc.p(0, size.height / 2));
-                    var moveEase = cc.EaseOut.create(moveLeft, 3);
-                    var moveEase1 = cc.EaseOut.create(moveLeft1, 3);
-                    var callFun = cc.CallFunc.create(function() {
-                        this.removeChild(nextLblLevel);
-                        this.removeChild(nextLblScore);
-                        this.addBubbles();
-                        this.lblScore.setString(this.score + "/" + this.requireScore);
-                        this.lblLevel.setString("LEVEL " + this.level);
-                        var fadeIn1 = cc.FadeIn.create(0.5);
-                        var fadeIn2 = cc.FadeIn.create(0.5);
-                        var fadeIn3 = cc.FadeIn.create(0.5);
-                        this.lblScore.runAction(fadeIn1);
-                        this.lblLevel.runAction(fadeIn2);
-                    }, this);
-                    var actionSeq = cc.Sequence.create(moveEase1, callFun);
-                    nextLblLevel.runAction(moveEase);
-                    nextLblScore.runAction(actionSeq);
-                }, this);
-                var sequence1 = cc.Sequence.create(lblDelay, fadeOut1);
-                var sequence2 = cc.Sequence.create(lblDelay, fadeOut2);
-                var sequence3 = cc.Sequence.create(lblDelay, fadeOut3, fadeCallFun);
-                this.lblScore.runAction(sequence1);
-                this.lblLevel.runAction(sequence2);
-                */
             } else {
                 // this.removeRestBubbles();
                 this.gameOver(false);
@@ -542,7 +503,6 @@ var GameLayer = cc.Layer.extend({
     blurSprite: function(sprite) {
         var blurSize = cc.size(40, 40);
         if('opengl' in cc.sys.capabilities){
-            cc.log('support opengl shader');
             var shader = new cc.GLProgram(s_gassian_blur_vsh, s_gassian_blur_fsh);
             shader.retain();
             shader.addAttribute(cc.ATTRIBUTE_NAME_POSITION, cc.VERTEX_ATTRIB_POSITION);
@@ -568,7 +528,7 @@ var GameLayer = cc.Layer.extend({
 
     gameOver: function (win) {
         gameState = STATE_FINISHED;
-        winGame = true;
+        winGame = win;
         showResult();
     },
 

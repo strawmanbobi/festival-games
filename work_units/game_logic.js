@@ -15,6 +15,8 @@ var logger = require('../poem/logging/logger4js').helper;
 var enums = new Enums();
 var errorCode = new ErrorCode();
 
+var jo = require('jpeg-autorotate');
+
 var NY2018_BUCKET_NAME = "ny2018-game";
 
 exports.createGameWorkUnit = function(fileName, filePath, playerID, useDefaultBG, contentType, callback) {
@@ -34,14 +36,45 @@ exports.createGameWorkUnit = function(fileName, filePath, playerID, useDefaultBG
         });
     } else {
         // read picture data
-        fs.readFile(filePath, function(readFileErr, fileData) {
-            if (readFileErr) {
-                logger.error("read picture file error : " + readFileErr);
-                callback(errorCode.FAILED, null);
-            } else {
+        if (contentType === "image/jpeg" || contentType === "image/jpg") {
+            var options = { quality: 50 };
+            jo.rotate(filePath, options, function(readFileErr, fileData, orientation, dimensions) {
+                if (readFileErr) {
+                    logger.error('An error occurred when rotating the file: ' + JSON.stringify(readFileErr));
+                }
+                logger.info('Orientation was: ' + orientation);
+                logger.info('Height after rotation: ' + dimensions.height);
+                logger.info('Width after rotation: ' + dimensions.width);
                 // upload picture to aliOSS
                 logger.info("read picture file successfully, file size = " + fileData.length);
                 aliOss.saveObjectFromBinary(fileName, fileData, contentType,
+                function (createObjectErr, objectID) {
+                    logger.info("create object to aliOSS result = " + JSON.stringify(createObjectErr));
+                    if (errorCode.SUCCESS.code === createObjectErr) {
+                        // save game to db
+                        var game = {
+                            playerID: playerID,
+                            gameID: fileName,
+                            useDefaultBG: 0,
+                            visit: 0
+                        };
+                        gameDao.createGame(game, function(createGameErr) {
+                            callback(createGameErr);
+                        });
+                    } else {
+                        callback(errorCode.FAILED);
+                    }
+                });
+            });
+        } else {
+            fs.readFile(filePath, function(readFileErr, fileData) {
+                if (readFileErr) {
+                    logger.error("read picture file error : " + readFileErr);
+                    callback(errorCode.FAILED, null);
+                } else {
+                    // upload picture to aliOSS
+                    logger.info("read picture file successfully, file size = " + fileData.length);
+                    aliOss.saveObjectFromBinary(fileName, fileData, contentType,
                     function (createObjectErr, objectID) {
                         logger.info("create object to aliOSS result = " + JSON.stringify(createObjectErr));
                         if (errorCode.SUCCESS.code === createObjectErr) {
@@ -59,8 +92,9 @@ exports.createGameWorkUnit = function(fileName, filePath, playerID, useDefaultBG
                             callback(errorCode.FAILED);
                         }
                     });
-            }
-        });
+                }
+            });
+        }
     }
 };
 

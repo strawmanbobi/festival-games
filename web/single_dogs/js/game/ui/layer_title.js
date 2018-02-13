@@ -195,6 +195,9 @@ var TitleLayer = cc.Layer.extend({
     doUpdate: function () {
         // update visit label
         this.noteLabel.setString(word);
+        if (null === visited) {
+            visited = 1;
+        }
         this.visitLabel.setString(visited + "人玩过你的游戏");
     }
 });

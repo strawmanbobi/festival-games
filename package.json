@@ -18,6 +18,7 @@
         "mongodb": "^2.2.30",
         "aliyun-sdk": "^1.9.12",
         "oss-client": "^0.8.0",
-        "ali-oss": "^4.6.2"
+        "ali-oss": "^4.6.2",
+        "jpeg-autorotate": "^3.1.0"
     }
 }

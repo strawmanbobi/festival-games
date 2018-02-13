@@ -57,5 +57,8 @@ function detectPicture() {
 }
 
 $(function() {
-    $("#my_picture").fileinput({showUpload: false, previewFileType: "image"});
+    $("#my_picture").fileinput({
+        showUpload: false,
+        showPreview: false
+    });
 });

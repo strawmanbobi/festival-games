@@ -59,7 +59,7 @@ exports.createGame = function (req, res) {
             var find = "\\\\";
             var re = new RegExp(find, "g");
             var unixFilePath = filePath.replace(re, "/");
-            fileName = unixFilePath.substring(unixFilePath.lastIndexOf("/"));
+            fileName = unixFilePath.substring(unixFilePath.lastIndexOf("/") + 1);
             // set MIME to octet-stream as there might not be any contentType passed from the front-end form
             contentType = files.my_picture.type || "application/octet-stream";
             logger.info("create game form submitted successfully : " + playerID + ", " + filePath + ", " + fileName + ", " + contentType);

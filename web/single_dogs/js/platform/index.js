@@ -132,10 +132,14 @@ function ccLoad() {
 function showResult() {
     if (winGame && 0 === useDefaultBG) {
         $("#result_pic").attr("src", bgImgPath);
-        $("#result_text").html("狗年大吉, 万事如意<br>恭喜获得照片一张");
+        $("#pic_download").attr("href", bgImgPath);
+        $("#pic_download").attr("download", bgImgPath + ".jpg");
+        $("#result_text").html("情侣狗已死光，单身狗万岁！");
     } else {
+        $("#pic_download").attr("href", bgImgPath);
+        $("#pic_download").attr("download", bgImgPath + ".jpg");
         $("#result_pic").attr("src", "./res/images/single_dog.png");
-        $("#result_text").html("狗年大吉, 万事如意<br>来吃狗粮哟~");
+        $("#result_text").html("狗年大吉, 万事如意<br>过年多吃狗粮");
     }
     $("#result_layer").show();
 }
