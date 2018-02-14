@@ -2,29 +2,33 @@
 
 #### prerequisites
 
-install node.js (version above 6.0)
-    
+node.js (ver6.0 above)
+
+mongo DB (ver3.4 above)
+
+#### install dependencies
+
     npm install -g bower
     npm install
     
-    cd to web/js/public
+    cd to web/<some-game>/js/public
     bower install
 
-install mongo DB (version above 3.4)
+#### create DB
 
 run mongo client and grant permission to user
-    
-    > use the_game;
-    switched to db the_game
-    > db.createUser(
-      {
-          user: "admin",
-          pwd: "123456",
-          roles: [
-             { role: "readWrite", db: "the_game" }
-          ]
-      });
 
+    use festival;
+    db.createUser(
+    {
+        user: "admin",
+        pwd: "123456",
+        roles: [
+           { role: "readWrite", db: "festival" }
+        ]
+    });
+
+#### create temp file folders under /data/game in Linux
 
 #### to start
 
