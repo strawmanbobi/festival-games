@@ -11,7 +11,7 @@ mongo DB (ver3.4 above)
     npm install -g bower
     npm install
     
-    cd to web/js/public
+    cd to web/<some-game>/js/public
     bower install
 
 #### create DB
